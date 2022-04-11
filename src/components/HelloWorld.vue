@@ -10,6 +10,9 @@ mapboxgl.accessToken =
 const nanXun =
   "https://visom-gis.oss-cn-beijing.aliyuncs.com/3dtiles/%E5%8D%97%E6%B5%94%E6%A8%A1%E5%9E%8B1/%E5%8C%BA%E5%9D%971-%E4%BF%AE%E6%B0%B4%E9%9D%A2-3d%20tiles/Production_2/Scene/Production_2.json";
 const yunYang = "https://yunkaigaosu.cn:1010/data/tilesets/bridge/tileset.json";
+const yunYangAdderss = [108.737581, 30.983239];
+
+
 const tileChiyoda = 'https://s3-ap-northeast-1.amazonaws.com/3dimension.jp/13000_tokyo-egm96/13101_chiyoda-ku_notexture/tileset.json';
 const tileChiyodaAdderss = [139.75643914212702,35.68836671417561]
 
@@ -32,16 +35,11 @@ export default {
     const nanXunLat = 30.885761605180775;
     const nanXunLng = 120.41632822243005;
 
-    const yunYangAdderss = [108.737581, 30.983239];
-
-    const tile3dLayer = new MapboxLayer({
-      id: "tile3dlayer",
+    const createTile3dLayer = (url,id) => new MapboxLayer({
+      id,
       type: Tile3DLayer,
       pointSize: 1,
-      // data: yunYang,
-      data: xiLi,
-      // data: nanXun,
-      // data: tileChiyoda,
+      data: url,
       // opacity: 0.9,
       pickable: true,
       loader: Tiles3DLoader,
@@ -62,7 +60,10 @@ export default {
       //   },
       // },
     });
-
+     const tile3dLayer = createTile3dLayer(xiLi,"tile3dlayer");
+     const tile3dLayer2 = createTile3dLayer(xiLi,"tile3dlayer2");
+ 
+ 
     const map = new mapboxgl.Map({
       container: "map", // container ID
       style: "mapbox://styles/mapbox-map-design/ckhqrf2tz0dt119ny6azh975y",
@@ -99,6 +100,8 @@ export default {
         },
       });
       map.addLayer(tile3dLayer);
+      map.addLayer(tile3dLayer2);
+
       console.log("load");
     });
   },
